@@ -1,9 +1,14 @@
-import React from 'react'
+import Navbar from "../components/Navbar";
+import SideBar from "../components/SideBar";
 
 const HomePage = () => {
   return (
-    <div className='text-blue-700 font-bold text-2xl'>HomePage</div>
-  )
-}
+    <>
+      <Navbar />
+      <SideBar />
+      {/* <Footer/> */}
+    </>
+  );
+};
 
-export default HomePage
+export default HomePage;

@@ -1,5 +1,5 @@
 // import React, { useState, useEffect } from 'react';
-import axios from '../api/axios';
+import axios from "../api/axios";
 
 // const Employee = () => {
 //     const [employees, setEmployees] = useState([]);
@@ -63,74 +63,90 @@ import axios from '../api/axios';
 // export default Employee;
 
 // src/pages/EmployeeManagement.jsx
-import { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 
 const EmployeeManagement = () => {
   const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    position: '',
-    department: '',
-    salary: '',
+    name: "",
+    email: "",
+    position: "",
+    department: "",
+    salary: "",
   });
   const [editMode, setEditMode] = useState(false);
-    const [currentId, setCurrentId] = useState(null);
-    useEffect(() => {
-        fetchEmployees();
-    }, []);
+  const [currentId, setCurrentId] = useState(null);
+  useEffect(() => {
+    fetchEmployees();
+  }, []);
 
-    const fetchEmployees = async () => {
-        try {
-            const res = await axios.get('/employees');
-            setEmployees(res.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
+  const fetchEmployees = async () => {
+    try {
+      const res = await axios.get("/employees");
+      setEmployees(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (editMode) {
-      setEmployees(employees.map(employee => 
-        employee.id === currentId ? { ...formData, id: currentId } : employee
-      ));
+      setEmployees(
+        employees.map((employee) =>
+          employee.id === currentId ? { ...formData, id: currentId } : employee
+        )
+      );
       setEditMode(false);
       setCurrentId(null);
     } else {
-        setEmployees([...employees, { ...formData, id: Date.now() }]);
-        await axios.post('/employees/add', );
-            fetchEmployees();
+      setEmployees([...employees, { ...formData, id: Date.now() }]);
+    //   employeeData is inside 
+      await axios.post("/employees/add", );
+      fetchEmployees();
     }
-    setFormData({ name: '', email: '', position: '', department: '', salary: '' });
+    setFormData({
+      name: "",
+      email: "",
+      position: "",
+      department: "",
+      salary: "",
+    });
   };
 
   const handleEdit = (id) => {
-    const employee = employees.find(employee => employee.id === id);
+    const employee = employees.find((employee) => employee.id === id);
     setFormData(employee);
     setEditMode(true);
     setCurrentId(id);
   };
 
   const handleDelete = (id) => {
-    setEmployees(employees.filter(employee => employee.id !== id));
+    setEmployees(employees.filter((employee) => employee.id !== id));
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <header className="bg-blue-500 p-4">
-          <h1 className="text-white text-2xl font-semibold">Employee Management</h1>
+          <h1 className="text-white text-2xl font-semibold">
+            Employee Management
+          </h1>
         </header>
         <div className="p-6">
           <section className="mb-6">
-            <h2 className="text-xl font-semibold mb-4">{editMode ? 'Edit Employee' : 'Add Employee'}</h2>
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <h2 className="text-xl font-semibold mb-4">
+              {editMode ? "Edit Employee" : "Add Employee"}
+            </h2>
+            <form
+              onSubmit={handleSubmit}
+              className="grid grid-cols-1 gap-6 sm:grid-cols-2"
+            >
               <div>
                 <label className="block text-gray-700">Name</label>
                 <input
@@ -192,8 +208,11 @@ const EmployeeManagement = () => {
                 />
               </div>
               <div className="sm:col-span-2 text-right">
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">
-                  {editMode ? 'Update' : 'Add'}
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                >
+                  {editMode ? "Update" : "Add"}
                 </button>
               </div>
             </form>
@@ -206,13 +225,26 @@ const EmployeeManagement = () => {
               ) : (
                 <ul>
                   {employees.map((employee) => (
-                    <li key={employee.id} className="mb-4 p-4 bg-white rounded-lg shadow-md flex justify-between items-center">
+                    <li
+                      key={employee.id}
+                      className="mb-4 p-4 bg-white rounded-lg shadow-md flex justify-between items-center"
+                    >
                       <div>
-                        <p><strong>Name:</strong> {employee.name}</p>
-                        <p><strong>Email:</strong> {employee.email}</p>
-                        <p><strong>Position:</strong> {employee.position}</p>
-                        <p><strong>Department:</strong> {employee.department}</p>
-                        <p><strong>Salary:</strong> ${employee.salary}</p>
+                        <p>
+                          <strong>Name:</strong> {employee.name}
+                        </p>
+                        <p>
+                          <strong>Email:</strong> {employee.email}
+                        </p>
+                        <p>
+                          <strong>Position:</strong> {employee.position}
+                        </p>
+                        <p>
+                          <strong>Department:</strong> {employee.department}
+                        </p>
+                        <p>
+                          <strong>Salary:</strong> ${employee.salary}
+                        </p>
                       </div>
                       <div>
                         <button
@@ -241,4 +273,3 @@ const EmployeeManagement = () => {
 };
 
 export default EmployeeManagement;
-
