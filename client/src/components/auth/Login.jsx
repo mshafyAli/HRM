@@ -88,7 +88,7 @@ try{
 
               <div className="flex items-center">
                 <h4>Not have any Account ?</h4>
-                <Link to="/sign-up" className="text-blue-600 pl-2">Sign Up</Link>
+                <Link to="/register" className="text-blue-600 pl-2">Sign Up</Link>
               </div>
 
             </form>

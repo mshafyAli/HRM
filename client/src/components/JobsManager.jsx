@@ -48,7 +48,7 @@ import axios from "../api/axios";
 //                 <input type="text" name="position" value={employeeData.position} onChange={handleChange} placeholder="Position" required className=' w-[35rem] text-xl px-3 py-2 my-2 border border-gray-400 rounded-xl'/>
 //                 <input type="text" name="department" value={employeeData.department} onChange={handleChange} placeholder="Department" required className=' w-[35rem] text-xl px-3 py-2 my-2 border border-gray-400 rounded-xl'/>
 //                 <input type="number" name="salary" value={employeeData.salary} onChange={handleChange} placeholder="Salary" required className=' w-[35rem] text-xl px-3 py-2 my-2 border border-gray-400 rounded-xl'/>
-//                 <button type="submit" className=' bg-blue-500 py-3 rounded-full'>Add Employee</button>
+//                 <button type="submit" className=' bg-primary py-3 rounded-full'>Add Employee</button>
 //             </form>
 //             <h3 className=' text-start text-2xl'>Employee List</h3>
 //             <ul>
@@ -133,7 +133,7 @@ const EmployeeManagement = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-        <header className="bg-blue-500 p-4">
+        <header className="bg-primary p-4">
           <h1 className="text-white text-2xl font-semibold">
             Employee Management
           </h1>
@@ -210,7 +210,7 @@ const EmployeeManagement = () => {
               <div className="sm:col-span-2 text-right">
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                  className="bg-primary text-white px-4 py-2 rounded-md"
                 >
                   {editMode ? "Update" : "Add"}
                 </button>

@@ -60,7 +60,7 @@ const SalaryManaging = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-        <header className="bg-blue-500 p-4">
+        <header className="bg-primary p-4">
           <h1 className="text-white text-2xl font-semibold">
             Salary Management
           </h1>
@@ -125,7 +125,7 @@ const SalaryManaging = () => {
               <div className="sm:col-span-2 text-right">
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                  className="bg-primary text-white px-4 py-2 rounded-md"
                 >
                   {editMode ? "Update" : "Add"}
                 </button>

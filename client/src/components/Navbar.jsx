@@ -6,8 +6,7 @@ const Navbar = () => {
     <>
       <nav className="flex justify-between items-center py-3 px-2  ">
         <div className="logo font-medium cursor-pointer">
-          <span className=" text-2xl font-medium text-blue-600">SQ</span> HR
-          Limited
+          <span className="text-2xl font-medium text-primary">Encoders HRM</span> 
         </div>
         <ul className="flex items-center gap-5">
           <li>

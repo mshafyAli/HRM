@@ -36,7 +36,7 @@ const SideBar = () => {
       <div className="  h-screen w-72">
         <ul className="m-3">
           <li
-            className=" px-3 py-5 flex gap-4 items-center cursor-pointer bg-blue-500 text-white rounded-xl"
+            className=" px-3 py-5 flex gap-4 items-center cursor-pointer bg-primary text-white rounded-xl"
             onClick={() => {
               setEmployee(false);
               setLeaves(false);
@@ -55,7 +55,7 @@ const SideBar = () => {
             <div>Dashboard</div>
           </li>
           <li
-            className="px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-blue-500 hover:text-white rounded-xl"
+            className="px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl"
             onClick={() => {
               setEmployee(true);
               setLeaves(false);
@@ -74,7 +74,7 @@ const SideBar = () => {
             <div>Employees</div>
           </li>
           <li
-            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-blue-500 hover:text-white rounded-xl"
+            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl"
             onClick={() => {
               setEmployee(false);
               setLeaves(true);
@@ -93,14 +93,14 @@ const SideBar = () => {
             <div>Leaves Planner</div>
           </li>
 
-          {/* <li className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-blue-500 hover:text-white rounded-xl">
+          {/* <li className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl">
             <div>
               <LuArrowUpFromLine />
             </div>
             <div>Payrolls Exports</div>
           </li> */}
           <li
-            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-blue-500 hover:text-white rounded-xl"
+            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl"
             onClick={() => {
               setEmployee(false);
               setLeaves(false);
@@ -119,7 +119,7 @@ const SideBar = () => {
             <div>Salary Modeling</div>
           </li>
           <li
-            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-blue-500 hover:text-white rounded-xl"
+            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl"
             onClick={() => {
               setEmployee(false);
               setLeaves(false);
@@ -138,7 +138,7 @@ const SideBar = () => {
             <div>Activity Manager</div>
           </li>
           <li
-            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-blue-500 hover:text-white rounded-xl"
+            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl"
             onClick={() => {
               setEmployee(false);
               setLeaves(false);
@@ -159,7 +159,7 @@ const SideBar = () => {
           <hr />
           <h1 className=" uppercase font-bold">Recruitment</h1>
           <li
-            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-blue-500 hover:text-white rounded-xl"
+            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl"
             onClick={() => {
               setEmployee(false);
               setLeaves(false);
@@ -178,7 +178,7 @@ const SideBar = () => {
             <div>Jobs</div>
           </li>
           <li
-            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-blue-500 hover:text-white rounded-xl"
+            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl"
             onClick={() => {
               setEmployee(false);
               setLeaves(false);
@@ -197,7 +197,7 @@ const SideBar = () => {
             <div>Candidates</div>
           </li>
           <li
-            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-blue-500 hover:text-white rounded-xl"
+            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl"
             onClick={() => {
               setEmployee(false);
               setLeaves(false);

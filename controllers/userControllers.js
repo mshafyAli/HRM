@@ -9,51 +9,6 @@ import  isAuthenticatedUser  from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Create user route without file upload
-// router.post("/create-user", async (req, res, next) => {
-//   try {
-//     const { name, email, password } = req.body;
-
-//     // Check if email already exists
-//     const userEmail = await User.findOne({ email });
-//     if (userEmail) {
-//       return next(new errorHandler("Email already exists", 400));
-//     }
-
-//     // Create user object
-//     const user = {
-//       name,
-//       email,
-//       password,
-//     };
-//     console.log(user);
-
-//     // Create activation token
-//     const activationToken = createActivationToken(user);
-
-//     // Generate activation URL
-//     const activationUrl = `http://localhost:5173/activation/${activationToken}`;
-
-//     // Send activation email
-//     try {
-//       await sendMail({
-//         email: user.email,
-//         subject: "Activate your account",
-//         message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}`,
-//       });
-//       res.status(200).json({
-//         success: true,
-//         message: `Please check your email ${user.email} to activate your account.`,
-//       });
-//     } catch (error) {
-//       return next(new errorHandler(error.message), 500);
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     return next(new errorHandler(err.message), 400);
-//   }
-// });
-
 
 router.post("/create-user", async (req, res, next) => {
   try {
