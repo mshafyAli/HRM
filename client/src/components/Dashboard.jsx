@@ -1,5 +1,6 @@
 // src/pages/CandidatesManager.jsx
 import { useState } from "react";
+import { FiUsers, FiUserPlus, FiCalendar, FiBarChart2 } from "react-icons/fi";
 
 const CandidatesManager = () => {
   const [candidates, setCandidates] = useState([]);
@@ -49,7 +50,45 @@ const CandidatesManager = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="max-w-4xl mx-auto  rounded-lg shadow-md overflow-hidden">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-4">
+          {[
+            {
+              title: "Total Employees",
+              icon: FiUsers,
+              value: "245",
+              description: "+12 from last month",
+            },
+            {
+              title: "Open Positions",
+              icon: FiUserPlus,
+              value: "15",
+              description: "+3 from last month",
+            },
+            {
+              title: "Pending Leave Requests",
+              icon: FiCalendar,
+              value: "8",
+              description: "-2 from last week",
+            },
+            {
+              title: "Turnover Rate",
+              icon: FiBarChart2,
+              value: "4.2%",
+              description: "-0.5% from last quarter",
+            },
+          ].map((card, index) => (
+            <div key={index} className="bg-white shadow-md rounded-lg p-4">
+              <div className="flex items-center justify-between pb-2">
+                <h3 className="text-sm font-medium">{card.title}</h3>
+                <card.icon className="h-4 w-4 text-gray-500" />
+              </div>
+              <div className="text-2xl font-bold">{card.value}</div>
+              <p className="text-xs text-gray-500">{card.description}</p>
+            </div>
+          ))}
+        </div>
+
         <header className="bg-primary p-4">
           <h1 className="text-white text-2xl font-semibold">
             Candidates Manager
