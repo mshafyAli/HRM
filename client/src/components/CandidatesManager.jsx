@@ -9,6 +9,7 @@ const CandidatesManager = () => {
     phone: "",
     position: "",
     status: "",
+    date: "",
   });
   const [editMode, setEditMode] = useState(false);
   const [currentId, setCurrentId] = useState(null);
@@ -124,11 +125,23 @@ const CandidatesManager = () => {
                   <option value="" disabled>
                     Select Status
                   </option>
-                  <option value="Applied">Applied</option>
                   <option value="Interviewing">Interviewing</option>
                   <option value="Hired">Hired</option>
                   <option value="Rejected">Rejected</option>
                 </select>
+              </div>
+
+              <div>
+                <label className="block text-gray-700">Date</label>
+                <input
+                  type="text"
+                  name="position"
+                  value={formData.date}
+                  onChange={handleInputChange}
+                  className="mt-1 p-2 w-full border rounded-md"
+                  placeholder="Position Applied For"
+                  required
+                />
               </div>
               <div className="sm:col-span-2 text-right">
                 <button
@@ -143,7 +156,70 @@ const CandidatesManager = () => {
           <section>
             <h2 className="text-xl font-semibold mb-4">Candidate Records</h2>
             <div className="bg-gray-50 p-4 rounded-lg shadow-inner">
-              {candidates.length === 0 ? (
+              <h3>Total Employees: {candidates.length}</h3>
+              <table className="w-full border-collapse border border-gray-200">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="border border-gray-300 p-2">Name</th>
+                    <th className="border border-gray-300 p-2">Email</th>
+                    <th className="border border-gray-300 p-2">Position</th>
+                    <th className="border border-gray-300 p-2">Department</th>
+                    <th className="border border-gray-300 p-2">Salary</th>
+                    <th className="border border-gray-300 p-2">
+                      Date of Joining
+                    </th>
+                    <th className="border border-gray-300 p-2">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {candidates.length > 0 ? (
+                    candidates.map((emp, index) => (
+                      <tr key={index} className="border border-gray-200">
+                        <td className="border border-gray-300 p-2">
+                          {emp.name}
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                          {emp.email}
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                          {emp.position}
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                          {emp.department}
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                          {emp.salary}
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                          {emp.dateOfJoining}
+                        </td>
+                        <td className="border border-gray-300 p-2 text-center">
+                          <button
+                            onClick={() => handleEdit(emp)}
+                            className="bg-blue-500 text-white px-2 py-1 rounded-md mr-2"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDelete(emp._id)}
+                            className="bg-red-500 text-white px-2 py-1 rounded-md"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="text-center text-gray-500 p-4">
+                        No employees found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+
+              {/* {candidates.length === 0 ? (
                 <p className="text-gray-700">No candidate records available.</p>
               ) : (
                 <ul>
@@ -186,7 +262,7 @@ const CandidatesManager = () => {
                     </li>
                   ))}
                 </ul>
-              )}
+              )} */}
             </div>
           </section>
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Employee from "./components/Employee";
 import Login from "./components/auth/Login";
@@ -7,12 +7,21 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ActivationPage from "./Pages/Activation";
 import HomePage from "./Pages/HomePage";
+import { useDispatch } from "react-redux";
 
+import { fetchEmployees } from "./store/employeeSlice";
 
 const App = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchEmployees()); // Fetch on app load
+  }, [dispatch]);
+
   return (
     <>
-      <Router>
+      
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/employees" element={<Employee />} />
@@ -35,7 +44,7 @@ const App = () => {
           pauseOnHover
           theme="light"
         />
-      </Router>
+      
     </>
   );
 };

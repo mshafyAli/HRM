@@ -1,9 +1,11 @@
 // src/pages/CandidatesManager.jsx
 import { useState } from "react";
 import { FiUsers, FiUserPlus, FiCalendar, FiBarChart2 } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
 const CandidatesManager = () => {
   const [candidates, setCandidates] = useState([]);
+  const { employees} = useSelector((state) => state.employees);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -51,7 +53,7 @@ const CandidatesManager = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-4xl mx-auto  rounded-lg shadow-md overflow-hidden">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-4">
+        {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-4">
           {[
             {
               title: "Total Employees",
@@ -87,6 +89,48 @@ const CandidatesManager = () => {
               <p className="text-xs text-gray-500">{card.description}</p>
             </div>
           ))}
+        </div> */}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          {/* Total Employees Card */}
+          <div className="bg-white shadow-md rounded-lg p-4">
+            <div className="flex items-center justify-between pb-2">
+              <h3 className="text-sm font-medium">Total Employees</h3>
+              <FiUsers className="h-4 w-4 text-gray-500" />
+            </div>
+            <div className="text-2xl font-bold">{employees.length}</div>
+            <p className="text-xs text-gray-500">+12 from last month</p>
+          </div>
+
+          {/* Open Positions Card */}
+          <div className="bg-white shadow-md rounded-lg p-4">
+            <div className="flex items-center justify-between pb-2">
+              <h3 className="text-sm font-medium">Open Positions</h3>
+              <FiUserPlus className="h-4 w-4 text-gray-500" />
+            </div>
+            <div className="text-2xl font-bold">15</div>
+            <p className="text-xs text-gray-500">+3 from last month</p>
+          </div>
+
+          {/* Pending Leave Requests Card */}
+          <div className="bg-white shadow-md rounded-lg p-4">
+            <div className="flex items-center justify-between pb-2">
+              <h3 className="text-sm font-medium">Pending Leave Requests</h3>
+              <FiCalendar className="h-4 w-4 text-gray-500" />
+            </div>
+            <div className="text-2xl font-bold">8</div>
+            <p className="text-xs text-gray-500">-2 from last week</p>
+          </div>
+
+          {/* Turnover Rate Card */}
+          <div className="bg-white shadow-md rounded-lg p-4">
+            <div className="flex items-center justify-between pb-2">
+              <h3 className="text-sm font-medium">Turnover Rate</h3>
+              <FiBarChart2 className="h-4 w-4 text-gray-500" />
+            </div>
+            <div className="text-2xl font-bold">4.2%</div>
+            <p className="text-xs text-gray-500">-0.5% from last quarter</p>
+          </div>
         </div>
 
         <header className="bg-primary p-4">
@@ -163,7 +207,7 @@ const CandidatesManager = () => {
                   <option value="" disabled>
                     Select Status
                   </option>
-                  <option value="Applied">Applied</option>
+                
                   <option value="Interviewing">Interviewing</option>
                   <option value="Hired">Hired</option>
                   <option value="Rejected">Rejected</option>

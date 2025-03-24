@@ -1,14 +1,17 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const dotenv = require("dotenv");
-
+const employeeRoutes = require("./routes/employeeRoutes");
+const candidateRoutes = require("./routes/candidateRoutes");
 
 
 
 dotenv.config();
+
+connectDB();
+
 const app = express();
 
 
@@ -18,10 +21,14 @@ app.use(cors({
   credentials: true, // Allow cookies to be sent
 }));
 
-connectDB();
+
 
 app.use(cookieParser());
 app.use(express.json());
+
+
+app.use("/api/v1", employeeRoutes);
+app.use("/api/v1", candidateRoutes);
 
 
 app.get("/", (req, res) => {

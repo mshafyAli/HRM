@@ -92,6 +92,25 @@ const SideBar = () => {
             </div>
             <div>Leaves Planner</div>
           </li>
+          <li
+            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl"
+            onClick={() => {
+              setEmployee(false);
+              setLeaves(false);
+              setDashboard(false);
+              setSetting(true);
+              setSalary(false);
+              setActivity(false);
+              setJobs(false);
+              setCandidates(false);
+              setResume(false);
+            }}
+          >
+            <div>
+              <IoSettingsSharp />
+            </div>
+            <div>Attandance</div>
+          </li>
 
           {/* <li className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl">
             <div>
@@ -137,25 +156,7 @@ const SideBar = () => {
             </div>
             <div>Activity Manager</div>
           </li>
-          <li
-            className=" px-3 py-4 flex gap-4 items-center cursor-pointer hover:bg-primary hover:text-white rounded-xl"
-            onClick={() => {
-              setEmployee(false);
-              setLeaves(false);
-              setDashboard(false);
-              setSetting(true);
-              setSalary(false);
-              setActivity(false);
-              setJobs(false);
-              setCandidates(false);
-              setResume(false);
-            }}
-          >
-            <div>
-              <IoSettingsSharp />
-            </div>
-            <div>Settings</div>
-          </li>
+          
           <hr />
           <h1 className=" uppercase font-bold">Recruitment</h1>
           <li
@@ -217,7 +218,7 @@ const SideBar = () => {
           </li>
         </ul>
       </div>
-      <div className="  h-screen w-full bg-gray-100">
+      <div className="  h-auto w-full bg-gray-100">
         {dashboard ? (
           <Dashboard />
         ) : "" || employee ? (

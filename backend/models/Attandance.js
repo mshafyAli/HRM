@@ -1,0 +1,26 @@
+const mongoose = require("mongoose");
+
+const AttandanceSchema = new mongoose.Schema(
+  {
+    employee: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Employee",
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["Present", "Absent", "Late", "Leave"],
+      default: "Absent",
+    },
+    inTime: { type: String, default: "--:-- --" },
+    outTime: { type: String, default: "--:-- --" },
+    workingHours: { type: String, default: "-" },
+    remarks: { type: String, default: "" },
+    halfDay: { type: Boolean, default: false },
+    date: { type: Date, default: Date.now }, // To track date-wise attendance
+  },
+  { timestamps: true }
+);
+
+const Attandance = mongoose.model("Attandance", AttandanceSchema);
+module.exports = Attandance;
