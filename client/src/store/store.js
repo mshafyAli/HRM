@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import employeeReducer from "./employeeSlice";
 import candidateReducer from "./candidateSlice";
+import attandanceReducer from "./attandanceSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 
@@ -12,7 +13,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   employees: employeeReducer,
-  Candidate: candidateReducer,
+  candidate: candidateReducer,
+  attandance: attandanceReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

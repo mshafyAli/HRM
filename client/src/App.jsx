@@ -10,6 +10,7 @@ import HomePage from "./Pages/HomePage";
 import { useDispatch } from "react-redux";
 
 import { fetchEmployees } from "./store/employeeSlice";
+import AttendanceDetails from "./Pages/AttendanceDetails";
 
 const App = () => {
 
@@ -25,6 +26,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/employees" element={<Employee />} />
+          <Route path="/attandance/:attandanceId" element={<AttendanceDetails/>}/>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/activation/:activation_token" element={<ActivationPage />} />

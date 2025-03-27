@@ -4,6 +4,7 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const dotenv = require("dotenv");
 const employeeRoutes = require("./routes/employeeRoutes");
+const attandanceRoutes = require("./routes/attandanceRoutes");
 const candidateRoutes = require("./routes/candidateRoutes");
 
 
@@ -28,6 +29,7 @@ app.use(express.json());
 
 
 app.use("/api/v1", employeeRoutes);
+app.use("/api/v1", attandanceRoutes);
 app.use("/api/v1", candidateRoutes);
 
 

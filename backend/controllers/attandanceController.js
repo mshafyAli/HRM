@@ -33,7 +33,7 @@ const createAttandance = async (req, res) => {
     });
     
     await newAttandance.save();
-    res.status(201).json({message: "Attandance created successfully",attendance: newAttandance});
+    res.status(201).json({message: "Attandance created successfully",attandance: newAttandance});
   } catch (error) {
     console.error("Error Creating Attandance:", error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -48,71 +48,74 @@ const getAllAttandance = async (req,res) => {
         res.status(200).json(attandanceList)
 
     } catch (error) {
-        console.error("Error fetching attendance:", error);
+        console.error("Error fetching attandance:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
 
 
-// GET Attendance by ID
-const getAttendanceById = async (req, res) => {
-    try {
-      const attendance = await Attendance.findById(req.params.id)
-        .populate("employee", "name department position");
+// GET attandance by ID
+const getAttandanceById = async (req, res) => {
   
-      if (!attendance) {
-        return res.status(404).json({ message: "Attendance not found" });
+    try {
+      const attandance = await Attandance.findById(req.params.id)
+        .populate("employee", "name department position");
+        
+  
+      if (!attandance) {
+        return res.status(404).json({ message: "attandance not found" });
       }
   
-      res.status(200).json(attendance);
+      res.status(200).json(attandance);
     } catch (error) {
-      console.error("Error fetching attendance:", error);
+      console.error("Error fetching attandance:", error);
       res.status(500).json({ message: "Internal Server Error" });
+
     }
   };
   
-  // UPDATE Attendance
-  const updateAttendance = async (req, res) => {
+  // UPDATE attandance
+  const updateAttandance = async (req, res) => {
     try {
       const { status, inTime, outTime, workingHours, remarks, halfDay } = req.body;
   
-      const attendance = await Attendance.findById(req.params.id);
-      if (!attendance) {
-        return res.status(404).json({ message: "Attendance not found" });
+      const attandance = await Attandance.findById(req.params.id);
+      if (!attandance) {
+        return res.status(404).json({ message: "attandance not found" });
       }
   
       // Update fields
-      if (status) attendance.status = status;
-      if (inTime) attendance.inTime = inTime;
-      if (outTime) attendance.outTime = outTime;
-      if (workingHours) attendance.workingHours = workingHours;
-      if (remarks !== undefined) attendance.remarks = remarks;
-      if (halfDay !== undefined) attendance.halfDay = halfDay;
+      if (status) attandance.status = status;
+      if (inTime) attandance.inTime = inTime;
+      if (outTime) attandance.outTime = outTime;
+      if (workingHours) attandance.workingHours = workingHours;
+      if (remarks !== undefined) attandance.remarks = remarks;
+      if (halfDay !== undefined) attandance.halfDay = halfDay;
   
-      await attendance.save();
+      await attandance.save();
   
-      res.status(200).json({ message: "Attendance updated successfully", attendance });
+      res.status(200).json({ message: "attandance updated successfully", attandance });
     } catch (error) {
-      console.error("Error updating attendance:", error);
+      console.error("Error updating attandance:", error);
       res.status(500).json({ message: "Internal Server Error" });
     }
   };
   
-  // DELETE Attendance
-  const deleteAttendance = async (req, res) => {
+  // DELETE attandance
+  const deleteAttandance = async (req, res) => {
     try {
-      const attendance = await Attendance.findByIdAndDelete(req.params.id);
+      const attandance = await Attandance.findByIdAndDelete(req.params.id);
   
-      if (!attendance) {
-        return res.status(404).json({ message: "Attendance not found" });
+      if (!attandance) {
+        return res.status(404).json({ message: "attandance not found" });
       }
   
-      res.status(200).json({ message: "Attendance deleted successfully" });
+      res.status(200).json({ message: "attandance deleted successfully" });
     } catch (error) {
-      console.error("Error deleting attendance:", error);
+      console.error("Error deleting attandance:", error);
       res.status(500).json({ message: "Internal Server Error" });
     }
   };
 
 
-module.exports = { createAttandance, getAllAttandance };
+module.exports = { createAttandance, getAllAttandance, getAttandanceById  ,updateAttandance,deleteAttandance };

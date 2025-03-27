@@ -283,8 +283,10 @@ const EmployeeManagement = () => {
     email: "",
     position: "",
     department: "",
-    salary: "",
     dateOfJoining: "",
+    number: "",
+    address: "",
+    emergencyNumber: "",
   });
 
   const handleInputChange = (e) => {
@@ -311,8 +313,10 @@ const EmployeeManagement = () => {
       email: "",
       position: "",
       department: "",
-      salary: "",
       dateOfJoining: "",
+      number: "",
+      address: "",
+      emergencyNumber: "",
     });
     setEditingId(null);
   };
@@ -331,7 +335,7 @@ const EmployeeManagement = () => {
   };
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <header className="bg-primary p-4">
           <h1 className="text-white text-2xl font-semibold">
             Employee Management
@@ -392,14 +396,38 @@ const EmployeeManagement = () => {
                 />
               </div>
               <div>
-                <label className="block text-gray-700">Salary</label>
+                <label className="block text-gray-700">Contact No</label>
                 <input
                   type="number"
-                  name="salary"
-                  value={formData.salary}
+                  name="number"
+                  value={formData.number}
                   onChange={handleInputChange}
                   className="mt-1 p-2 w-full border rounded-md"
-                  placeholder="50000"
+                  placeholder="+923000000000"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700">Emergency No</label>
+                <input
+                  type="number"
+                  name="emergencyNumber"
+                  value={formData.emergencyNumber}
+                  onChange={handleInputChange}
+                  className="mt-1 p-2 w-full border rounded-md"
+                  placeholder="+923000000000"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700">Address</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  className="mt-1 p-2 w-full border rounded-md"
+                  placeholder="Karachi Pakistan"
                   required
                 />
               </div>
@@ -431,7 +459,7 @@ const EmployeeManagement = () => {
               {loading && <p>Loading...</p>}
               {error && <p>Error: {error}</p>}
 
-              <h3>Total Employees: {employees.length}</h3>
+              {/* <h3>Total Employees: {employees.length}</h3> */}
               <table className="w-full border-collapse border border-gray-200">
                 <thead>
                   <tr className="bg-gray-100">
@@ -439,7 +467,9 @@ const EmployeeManagement = () => {
                     <th className="border border-gray-300 p-2">Email</th>
                     <th className="border border-gray-300 p-2">Position</th>
                     <th className="border border-gray-300 p-2">Department</th>
-                    <th className="border border-gray-300 p-2">Salary</th>
+                    <th className="border border-gray-300 p-2">Number</th>
+                    <th className="border border-gray-300 p-2">Emergency No</th>
+                    <th className="border border-gray-300 p-2">Address</th>
                     <th className="border border-gray-300 p-2">
                       Date of Joining
                     </th>
@@ -463,7 +493,13 @@ const EmployeeManagement = () => {
                           {emp.department}
                         </td>
                         <td className="border border-gray-300 p-2">
-                          {emp.salary}
+                          {emp.number}
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                          {emp.emergencyNumber}
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                          {emp.address}
                         </td>
                         <td className="border border-gray-300 p-2">
                           {emp.dateOfJoining}
@@ -471,13 +507,13 @@ const EmployeeManagement = () => {
                         <td className="border border-gray-300 p-2 text-center">
                           <button
                             onClick={() => handleEdit(emp)}
-                            className="bg-blue-500 text-white px-2 py-1 rounded-md mr-2"
+                            className="bg-blue-500 text-white w-full mb-1 px-2 py-1 rounded-md mr-2"
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => handleDelete(emp._id)}
-                            className="bg-red-500 text-white px-2 py-1 rounded-md"
+                            className="bg-red-500 text-white w-full px-2 py-1 rounded-md"
                           >
                             Delete
                           </button>

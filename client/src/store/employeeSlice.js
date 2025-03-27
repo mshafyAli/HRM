@@ -12,13 +12,7 @@ export const fetchEmployees = createAsyncThunk(
   }
 );
 
-// export const fetchEmployeeBasicDetails = createAsyncThunk(
-//   "employees/fetchEmployeeBasicDetails",
-//   async () => {
-//     const response = await axios.get(`${baseUrl}/employees/basic`); // Your new API route
-//     return response.data;
-//   }
-// );
+
 
 export const fetchEmployeeBasicDetails = createAsyncThunk(
   "employees/fetchEmployeeBasicDetails",

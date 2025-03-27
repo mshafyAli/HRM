@@ -37,7 +37,6 @@ try{
     toast.error("Login Failed");
   }
   console.log(error);
-
 }
 
 
