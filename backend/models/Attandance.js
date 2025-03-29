@@ -9,7 +9,7 @@ const AttandanceSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Present", "Absent", "Late", "Leave"],
+      enum: ["Present", "Absent", "Holiday", "Leave"],
       default: "Absent",
     },
     inTime: { type: String, default: "--:-- --" },
@@ -18,6 +18,13 @@ const AttandanceSchema = new mongoose.Schema(
     remarks: { type: String, default: "" },
     halfDay: { type: Boolean, default: false },
     date: { type: Date, default: Date.now }, 
+    day: {
+      type: String,
+      default: function () {
+        return new Date(this.date).toLocaleDateString("en-US", { weekday: "long" });
+      },
+    },
+
   },
   { timestamps: true }
 );

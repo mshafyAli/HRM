@@ -40,6 +40,71 @@ const createAttandance = async (req, res) => {
   }
 };
 
+const markAttandance = async (req, res) => {
+  try {
+    const {
+      employee,
+      status,
+      inTime,
+      outTime,
+      workingHours,
+      remarks,
+      halfDay,
+      day,
+      date,
+    } = req.body;
+
+    let attendance = await Attandance.findOne({ employee, date });
+
+    if (attendance) {
+      // Update existing attendance record
+      attendance.status = status;
+      attendance.inTime = inTime;
+      attendance.outTime = outTime;
+      attendance.workingHours = workingHours;
+      attendance.remarks = remarks;
+      attendance.halfDay = halfDay;
+      attendance.day = day
+      await attendance.save();
+      return res.status(200).json(attendance);
+    }
+
+    // Create a new attendance record
+    attendance = new Attandance({
+      employee,
+      status,
+      inTime,
+      outTime,
+      workingHours,
+      remarks,
+      halfDay,
+      day,
+      date,
+    });
+    await attendance.save();
+    res.status(201).json(attendance);
+  } catch (error) {
+    res.status(500).json({ message: "Error saving attendance", error });
+  }
+};
+
+const getEmployeeAttandance = async (req, res) => {
+  try {
+    const { employeeId } = req.params;
+
+    const attandance = await Attandance.find({ employee: employeeId })
+      .populate("employee", "name department") // 🌟 Include name & department
+      .sort({ date: -1 });
+
+    if (!attandance.length) {
+      return res.status(404).json({ message: "No attendance records found" });
+    }
+
+    res.status(200).json(attandance);
+  } catch (error) {
+    res.status(500).json({ message: "Error Fetching Employees", error });
+  }
+};
 
 const getAllAttandance = async (req,res) => {
     try {
@@ -118,4 +183,4 @@ const getAttandanceById = async (req, res) => {
   };
 
 
-module.exports = { createAttandance, getAllAttandance, getAttandanceById  ,updateAttandance,deleteAttandance };
+module.exports = { createAttandance, getAllAttandance, getAttandanceById  ,updateAttandance,deleteAttandance,markAttandance,getEmployeeAttandance };

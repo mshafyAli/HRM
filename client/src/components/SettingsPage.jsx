@@ -271,325 +271,410 @@
 //   );
 // }
 
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchEmployeeBasicDetails } from "../store/employeeSlice";
-import { createAttandance } from "../store/attandanceSlice";
-import { useNavigate } from "react-router-dom";
 
-const EmployeeAttendanceCard = ({ employee, selectedDate }) => {
-  const dispatch = useDispatch();
+
+// import { useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import axios from "axios";
+
+// const AttendanceForm = () => {
+//   const [employees, setEmployees] = useState([]);
+//   const [attendance, setAttendance] = useState({});
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     axios
+//       .get("http://localhost:5000/api/v1/employees")
+//       .then((response) => setEmployees(response.data))
+//       .catch((error) => console.log(error));
+//   }, []);
+
+//   // Function to calculate working hours
+//   const calculateWorkingHours = (inTime, outTime) => {
+//     if (!inTime || !outTime) return "";
+    
+//     const [inHours, inMinutes] = inTime.split(":").map(Number);
+//     const [outHours, outMinutes] = outTime.split(":").map(Number);
+
+//     let hours = outHours - inHours;
+//     let minutes = outMinutes - inMinutes;
+
+//     if (minutes < 0) {
+//       hours -= 1;
+//       minutes += 60;
+//     }
+
+//     return `${hours} : ${minutes} mins`;
+//   };
+
+//   const handleInputChange = (id, field, value) => {
+//     setAttendance((prev) => {
+//       const updatedAttendance = {
+//         ...prev,
+//         [id]: { ...prev[id], [field]: value },
+//       };
+
+//       // Auto-update working hours when inTime or outTime is changed
+//       if (field === "inTime" || field === "outTime") {
+//         updatedAttendance[id].workingHours = calculateWorkingHours(
+//           updatedAttendance[id]?.inTime,
+//           updatedAttendance[id]?.outTime
+//         );
+//       }
+
+//       return updatedAttendance;
+//     });
+//   };
+
+//   const submitAttendance = async (id) => {
+//     const record = {
+//       employee: id,
+//       status: attendance[id]?.status || "Present",
+//       inTime: attendance[id]?.inTime || "",
+//       outTime: attendance[id]?.outTime || "",
+//       workingHours: attendance[id]?.workingHours || "",
+//       remarks: attendance[id]?.remarks || "",
+//       halfDay: attendance[id]?.halfDay || false,
+//       date: new Date().toISOString().split("T")[0],
+//     };
+
+//     try {
+//       const response = await axios.post(
+//         "http://localhost:5000/api/v1/markAttandance",
+//         record
+//       );
+//       alert("Attendance saved");
+
+//       setAttendance((prev) => ({
+//         ...prev,
+//         [id]: { ...prev[id], attendanceId: response.data._id },
+//       }));
+//     } catch (error) {
+//       alert(error.response?.data?.message || "Error saving attendance");
+//     }
+//   };
+
+//   return (
+//     <div className="max-w-5xl mx-auto px-4">
+//       <h2 className="text-2xl font-bold mb-4">Employee Attendance</h2>
+//       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+//         {employees.map((emp) => (
+//           <div key={emp._id} className="border p-4 rounded-xl shadow bg-white">
+//             <h3 className="text-xl font-bold">{emp.name}</h3>
+//             <p>
+//               {emp.department} - {emp.position}
+//             </p>
+
+//             <div className="grid grid-cols-2 gap-4">
+//               {/* Status */}
+//               <div>
+//                 <label className="block mt-2">Status</label>
+//                 <select
+//                   className="w-full border p-2"
+//                   onChange={(e) =>
+//                     handleInputChange(emp._id, "status", e.target.value)
+//                   }
+//                 >
+//                   <option value="Present">Present</option>
+//                   <option value="Absent">Absent</option>
+//                   <option value="Leave">Leave</option>
+//                   <option value="Holiday">Holiday</option>
+//                 </select>
+//               </div>
+
+//               {/* Half Day */}
+//               <div className="flex gap-2 items-center">
+//                 <label className="block ">Half Day</label>
+//                 <input
+//                   type="checkbox"
+//                   className=""
+//                   onChange={(e) =>
+//                     handleInputChange(emp._id, "halfDay", e.target.checked)
+//                   }
+//                   disabled={attendance[emp._id]?.status === "Absent" || attendance[emp._id]?.status === "Leave" || attendance[emp._id]?.status === "Holiday"}
+//                 />
+//               </div>
+//             </div>
+
+//             {/* In Time & Out Time */}
+//             <div className="grid grid-cols-2 gap-4">
+//               <div>
+//                 <label className="block mt-2">In Time</label>
+//                 <input
+//                   type="time"
+//                   className="w-full border p-2"
+//                   disabled={attendance[emp._id]?.status === "Absent" || attendance[emp._id]?.status === "Leave" || attendance[emp._id]?.status === "Holiday"}
+//                   onChange={(e) =>
+//                     handleInputChange(emp._id, "inTime", e.target.value)
+//                   }
+//                 />
+//               </div>
+//               <div>
+//                 <label className="block mt-2">Out Time</label>
+//                 <input
+//                   type="time"
+//                   className="w-full border p-2"
+//                   disabled={attendance[emp._id]?.status === "Absent" || attendance[emp._id]?.status === "Leave" || attendance[emp._id]?.status === "Holiday"}
+//                   onChange={(e) =>
+//                     handleInputChange(emp._id, "outTime", e.target.value)
+//                   }
+//                 />
+//               </div>
+//             </div>
+
+//             {/* Auto-Calculated Working Hours */}
+//             <label className="block mt-2">Working Hours</label>
+//             <input
+//               type="text"
+//               className="w-full border p-2 bg-gray-100"
+//               value={attendance[emp._id]?.workingHours || ""}
+//               readOnly
+//             />
+
+//             {/* Remarks */}
+//             <label className="block mt-2">Remarks</label>
+//             <textarea
+//               className="w-full border p-2"
+//               rows="2"
+//               placeholder="Any remarks..."
+//               onChange={(e) =>
+//                 handleInputChange(emp._id, "remarks", e.target.value)
+//               }
+//             ></textarea>
+
+//             {/* Buttons */}
+//             <div className="mt-4">
+//               <button
+//                 className="bg-blue-500 text-white px-4 py-2 rounded"
+//                 onClick={() => submitAttendance(emp._id)}
+//               >
+//                 Save 
+//               </button>
+//               <button
+//                 className="bg-primary text-white px-4 py-2 rounded ml-2"
+//                 onClick={() => navigate(`/attandance/${emp._id}`)}
+//               >
+//                 View 
+//               </button>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AttendanceForm;
+
+
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const AttendanceForm = () => {
+  const [employees, setEmployees] = useState([]);
+  const [attendance, setAttendance] = useState({});
+  const [selectedDate, setSelectedDate] = useState(""); // New state for date selection
   const navigate = useNavigate();
 
-  const handleViewDetails = () => {
-    navigate(`/attandance/${employee._id}`);
-  };
-
-  const attandances = useSelector((state) => state.attandance.attandance._id);
-  // const attendanceIds = attandances.map((item) => item.attandance._id);
-  console.log("attendanceIds", attandances);
-
-  // Fetch attendance details from Redux store
-  const attandance = useSelector(
-    (state) => state.attandance.attandance[employee.id] || {}
-  );
-
-  console.log("attandance", attandance);
-  
-
-  // Local state for attendance data
-  const [attandanceData, setAttandanceData] = useState({
-    employeeId: employee?._id, // Include employee ID
-    status: attandance.status || "Present",
-    inTime: attandance.inTime || "",
-    outTime: attandance.outTime || "",
-    workingHours: attandance.workingHours || "00:00",
-    remarks: attandance.remarks || "",
-    halfDay: attandance.halfDay || false,
-    date: selectedDate, // Default to selected date
-  });
-
   useEffect(() => {
-    dispatch(fetchEmployeeBasicDetails(employee.id));
-  }, [dispatch, employee.id]);
+    axios
+      .get("http://localhost:5000/api/v1/employees")
+      .then((response) => setEmployees(response.data))
+      .catch((error) => console.log(error));
+  }, []);
 
-  // Update date when selectedDate changes
-  useEffect(() => {
-    setAttandanceData((prevData) => ({
-      ...prevData,
-      date: selectedDate,
-    }));
-  }, [selectedDate]);
-
-  // Calculate working hours
   const calculateWorkingHours = (inTime, outTime) => {
-    if (!inTime || !outTime) return "00:00";
-    const inDate = new Date(`2023-01-01T${inTime}`);
-    const outDate = new Date(`2023-01-01T${outTime}`);
-    if (outDate < inDate) return "00:00";
-    const diffMs = outDate - inDate;
-    const hours = Math.floor(diffMs / 3600000);
-    const minutes = Math.floor((diffMs % 3600000) / 60000);
-    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-      2,
-      "0"
-    )}`;
+    if (!inTime || !outTime) return "";
+    
+    const [inHours, inMinutes] = inTime.split(":").map(Number);
+    const [outHours, outMinutes] = outTime.split(":").map(Number);
+
+    let hours = outHours - inHours;
+    let minutes = outMinutes - inMinutes;
+
+    if (minutes < 0) {
+      hours -= 1;
+      minutes += 60;
+    }
+
+    return `${hours} : ${minutes} mins`;
   };
 
-  // Handle Input Changes
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setAttandanceData((prevData) => {
-      const updatedData = {
-        ...prevData,
-        [name]: type === "checkbox" ? checked : value,
+  const handleInputChange = (id, field, value) => {
+    setAttendance((prev) => {
+      const updatedAttendance = {
+        ...prev,
+        [id]: { ...prev[id], [field]: value },
       };
-      if (name === "inTime" || name === "outTime") {
-        updatedData.workingHours = calculateWorkingHours(
-          name === "inTime" ? value : prevData.inTime,
-          name === "outTime" ? value : prevData.outTime
+
+      if (field === "inTime" || field === "outTime") {
+        updatedAttendance[id].workingHours = calculateWorkingHours(
+          updatedAttendance[id]?.inTime,
+          updatedAttendance[id]?.outTime
         );
       }
-      return updatedData;
+
+      return updatedAttendance;
     });
   };
 
-  // Handle Save Attendance
-  const handleSave = () => {
-    console.log(attandanceData);
-    dispatch(createAttandance(attandanceData));
-    alert("Attendance saved successfully!");
-    
+  const submitAttendance = async (id) => {
+    if (!selectedDate) {
+      alert("Please select a date before submitting attendance.");
+      return;
+    }
+
+    const record = {
+      employee: id,
+      status: attendance[id]?.status || "Present",
+      inTime: attendance[id]?.inTime || "",
+      outTime: attendance[id]?.outTime || "",
+      workingHours: attendance[id]?.workingHours || "",
+      remarks: attendance[id]?.remarks || "",
+      halfDay: attendance[id]?.halfDay || false,
+      date: selectedDate, // Use the selected date
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/markAttandance",
+        record
+      );
+      alert("Attendance saved");
+
+      setAttendance((prev) => ({
+        ...prev,
+        [id]: { ...prev[id], attendanceId: response.data._id },
+      }));
+    } catch (error) {
+      alert(error.response?.data?.message || "Error saving attendance");
+    }
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="flex justify-between items-center mb-2">
-        <h3 className="text-lg font-bold text-gray-900">{employee.name}</h3>
-      </div>
+    <div className="max-w-5xl mx-auto px-4">
+      <h2 className="text-2xl font-bold mb-4">Employee Attendance</h2>
 
-      {/* Department and position */}
-      <p className="text-sm text-gray-600 mb-4">
-        {employee.department} • {employee.position}
-      </p>
-
-      
-      <p className="text-gray-600">
-        <strong>Date:</strong> {attandanceData.date}
-      </p>
-
-      {/* Attendance Inputs */}
-      <div className="mt-2 grid grid-cols-2 gap-4">
-        <div className="mt-4">
-          <label className="block text-sm font-medium">Status:</label>
-          <select
-            name="status"
-            value={attandanceData.status}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          >
-            <option value="Present">Present</option>
-            <option value="Absent">Absent</option>
-            <option value="Leave">Leave</option>
-          </select>
-        </div>
-        <div className="mt-2 flex items-center">
-          <input
-            type="checkbox"
-            name="halfDay"
-            checked={attandanceData.halfDay}
-            onChange={handleChange}
-            disabled={
-              attandanceData.status === "Leave" ||
-              attandanceData.status === "Absent"
-            }
-            className="mr-2"
-          />
-          <label className="text-sm font-medium">Mark as Half-Day</label>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 mt-2 gap-4">
-        <div className="mt-2">
-          <label className="block text-sm font-medium">In-Time:</label>
-          <input
-            type="time"
-            name="inTime"
-            value={attandanceData.inTime}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-
-        <div className="mt-2">
-          <label className="block text-sm font-medium">Out-Time:</label>
-          <input
-            type="time"
-            name="outTime"
-            value={attandanceData.outTime}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-      </div>
-
-      <div className="mt-2">
-        <label className="block text-sm font-medium">Working Hours:</label>
-        <input
-          type="text"
-          name="workingHours"
-          value={attandanceData.workingHours}
-          readOnly
-          className="w-full p-2 border rounded bg-gray-100"
-        />
-      </div>
-
-      <div className="mt-2">
-        <label className="block text-sm font-medium">Remarks:</label>
-        <input
-          type="text"
-          name="remarks"
-          value={attandanceData.remarks}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <button
-          onClick={handleSave}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full"
-        >
-          Save
-        </button>
-        <button
-          onClick={handleViewDetails}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full"
-        >
-          View All
-        </button>
-      </div>
-    </div>
-  );
-};
-
-const EmployeeAttendanceList = () => {
-  const dispatch = useDispatch();
-
-  const state = useSelector((state) => state);
-  console.log("Full Redux State:", state);
-
-  const { employees } = useSelector((state) => state.employees);
-
-  // State for selected date
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
-
-  useEffect(() => {
-    dispatch(fetchEmployeeBasicDetails());
-  }, [dispatch]);
-
-  return (
-    <div className="max-w-6xl mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">
-        Employee Attendance - {selectedDate}
-      </h1>
-
-      {/* Date Picker */}
-      <div className="flex justify-center mb-4">
+      {/* Date Picker for HR */}
+      <div className="mb-4">
+        <label className="block text-lg font-semibold">Select Date</label>
         <input
           type="date"
+          className="border p-2 w-full md:w-64"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
-          className="p-2 border rounded"
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {employees.map((employee) => (
-          <EmployeeAttendanceCard
-            key={employee.id}
-            employee={employee}
-            selectedDate={selectedDate}
-          />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {employees.map((emp) => (
+          <div key={emp._id} className="border p-4 rounded-xl shadow bg-white">
+            <h3 className="text-xl font-bold">{emp.name}</h3>
+            <p>{emp.department} - {emp.position}</p>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block mt-2">Status</label>
+                <select
+                  className="w-full border p-2"
+                  onChange={(e) =>
+                    handleInputChange(emp._id, "status", e.target.value)
+                  }
+                >
+                  <option value="Present">Present</option>
+                  <option value="Absent">Absent</option>
+                  <option value="Leave">Leave</option>
+                  <option value="Holiday">Holiday</option>
+                </select>
+              </div>
+
+              <div className="flex gap-2 items-center">
+                <label className="block">Half Day</label>
+                <input
+                  type="checkbox"
+                  onChange={(e) =>
+                    handleInputChange(emp._id, "halfDay", e.target.checked)
+                  }
+                  disabled={
+                    attendance[emp._id]?.status === "Absent" ||
+                    attendance[emp._id]?.status === "Leave" ||
+                    attendance[emp._id]?.status === "Holiday"
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block mt-2">In Time</label>
+                <input
+                  type="time"
+                  className="w-full border p-2"
+                  disabled={
+                    attendance[emp._id]?.status === "Absent" ||
+                    attendance[emp._id]?.status === "Leave" ||
+                    attendance[emp._id]?.status === "Holiday"
+                  }
+                  onChange={(e) =>
+                    handleInputChange(emp._id, "inTime", e.target.value)
+                  }
+                />
+              </div>
+              <div>
+                <label className="block mt-2">Out Time</label>
+                <input
+                  type="time"
+                  className="w-full border p-2"
+                  disabled={
+                    attendance[emp._id]?.status === "Absent" ||
+                    attendance[emp._id]?.status === "Leave" ||
+                    attendance[emp._id]?.status === "Holiday"
+                  }
+                  onChange={(e) =>
+                    handleInputChange(emp._id, "outTime", e.target.value)
+                  }
+                />
+              </div>
+            </div>
+
+            <label className="block mt-2">Working Hours</label>
+            <input
+              type="text"
+              className="w-full border p-2 bg-gray-100"
+              value={attendance[emp._id]?.workingHours || ""}
+              readOnly
+            />
+
+            <label className="block mt-2">Remarks</label>
+            <textarea
+              className="w-full border p-2"
+              rows="2"
+              placeholder="Any remarks..."
+              onChange={(e) =>
+                handleInputChange(emp._id, "remarks", e.target.value)
+              }
+            ></textarea>
+
+            <div className="mt-4">
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+                onClick={() => submitAttendance(emp._id)}
+              >
+                Save
+              </button>
+              <button
+                className="bg-primary text-white px-4 py-2 rounded ml-2"
+                onClick={() => navigate(`/attandance/${emp._id}`)}
+              >
+                View
+              </button>
+            </div>
+          </div>
         ))}
       </div>
     </div>
   );
 };
 
-export default EmployeeAttendanceList;
-
-
-
-// new code for checking
-
-
-// import { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// // import { saveAttendance } from "../redux/actions/attendanceActions"; // Import your action
-// import {  useNavigate } from "react-router-dom";
-// import { createAttandance } from "../store/attandanceSlice";
-
-// const EmployeeCard = () => {
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-
-//   const [attendance, setAttendance] = useState({
-//     status: "Present",
-//     inTime: "",
-//     outTime: "",
-//     workingHours: "",
-//     remarks: "",
-//   });
-
-//   const { employee } = useSelector((state) => state.employees);
-
-//   const handleChange = (e) => {
-//     setAttendance({ ...attendance, [e.target.name]: e.target.value });
-//   };
-
-//   const handleSave = () => {
-//     const attendanceData = {
-//       ...attendance,
-//       employee: employee._id, // Link attendance to employee
-//       date: new Date().toISOString().split("T")[0], // Save current date
-//     };
-
-//     dispatch(createAttandance(attendanceData)); // Dispatch save action
-//   };
-
-//   return (
-//     <div className="card">
-//       <h3>{employee.name}</h3>
-//       <p>Position: {employee.position}</p>
-//       <p>Department: {employee.department}</p>
-
-//       <label>Status:</label>
-//       <select name="status" value={attendance.status} onChange={handleChange}>
-//         <option value="Present">Present</option>
-//         <option value="Absent">Absent</option>
-//         <option value="Late">Late</option>
-//         <option value="Leave">Leave</option>
-//       </select>
-
-//       <label>In Time:</label>
-//       <input type="time" name="inTime" value={attendance.inTime} onChange={handleChange} />
-
-//       <label>Out Time:</label>
-//       <input type="time" name="outTime" value={attendance.outTime} onChange={handleChange} />
-
-//       <label>Working Hours:</label>
-//       <input type="text" name="workingHours" value={attendance.workingHours} onChange={handleChange} />
-
-//       <label>Remarks:</label>
-//       <input type="text" name="remarks" value={attendance.remarks} onChange={handleChange} />
-
-//       <button onClick={handleSave}>Save</button>
-//       <button onClick={() => navigate(`/attendance/${employee._id}`)}>View Attendance</button>
-//     </div>
-//   );
-// };
-
-// export default EmployeeCard;
+export default AttendanceForm;

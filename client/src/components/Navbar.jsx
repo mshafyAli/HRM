@@ -4,7 +4,7 @@ import { BiMessageSquareDetail } from "react-icons/bi";
 const Navbar = () => {
   return (
     <>
-      <nav className="flex justify-between items-center py-3 px-2  ">
+      <nav className="flex justify-between items-center py-3 px-2 border-b border-primary  ">
         <div className="logo font-medium cursor-pointer">
           <span className="text-2xl font-medium text-primary">Encoders HRM</span> 
         </div>
