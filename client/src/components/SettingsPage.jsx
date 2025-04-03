@@ -271,202 +271,6 @@
 //   );
 // }
 
-
-
-// import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-
-// const AttendanceForm = () => {
-//   const [employees, setEmployees] = useState([]);
-//   const [attendance, setAttendance] = useState({});
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     axios
-//       .get("http://localhost:5000/api/v1/employees")
-//       .then((response) => setEmployees(response.data))
-//       .catch((error) => console.log(error));
-//   }, []);
-
-//   // Function to calculate working hours
-//   const calculateWorkingHours = (inTime, outTime) => {
-//     if (!inTime || !outTime) return "";
-    
-//     const [inHours, inMinutes] = inTime.split(":").map(Number);
-//     const [outHours, outMinutes] = outTime.split(":").map(Number);
-
-//     let hours = outHours - inHours;
-//     let minutes = outMinutes - inMinutes;
-
-//     if (minutes < 0) {
-//       hours -= 1;
-//       minutes += 60;
-//     }
-
-//     return `${hours} : ${minutes} mins`;
-//   };
-
-//   const handleInputChange = (id, field, value) => {
-//     setAttendance((prev) => {
-//       const updatedAttendance = {
-//         ...prev,
-//         [id]: { ...prev[id], [field]: value },
-//       };
-
-//       // Auto-update working hours when inTime or outTime is changed
-//       if (field === "inTime" || field === "outTime") {
-//         updatedAttendance[id].workingHours = calculateWorkingHours(
-//           updatedAttendance[id]?.inTime,
-//           updatedAttendance[id]?.outTime
-//         );
-//       }
-
-//       return updatedAttendance;
-//     });
-//   };
-
-//   const submitAttendance = async (id) => {
-//     const record = {
-//       employee: id,
-//       status: attendance[id]?.status || "Present",
-//       inTime: attendance[id]?.inTime || "",
-//       outTime: attendance[id]?.outTime || "",
-//       workingHours: attendance[id]?.workingHours || "",
-//       remarks: attendance[id]?.remarks || "",
-//       halfDay: attendance[id]?.halfDay || false,
-//       date: new Date().toISOString().split("T")[0],
-//     };
-
-//     try {
-//       const response = await axios.post(
-//         "http://localhost:5000/api/v1/markAttandance",
-//         record
-//       );
-//       alert("Attendance saved");
-
-//       setAttendance((prev) => ({
-//         ...prev,
-//         [id]: { ...prev[id], attendanceId: response.data._id },
-//       }));
-//     } catch (error) {
-//       alert(error.response?.data?.message || "Error saving attendance");
-//     }
-//   };
-
-//   return (
-//     <div className="max-w-5xl mx-auto px-4">
-//       <h2 className="text-2xl font-bold mb-4">Employee Attendance</h2>
-//       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-//         {employees.map((emp) => (
-//           <div key={emp._id} className="border p-4 rounded-xl shadow bg-white">
-//             <h3 className="text-xl font-bold">{emp.name}</h3>
-//             <p>
-//               {emp.department} - {emp.position}
-//             </p>
-
-//             <div className="grid grid-cols-2 gap-4">
-//               {/* Status */}
-//               <div>
-//                 <label className="block mt-2">Status</label>
-//                 <select
-//                   className="w-full border p-2"
-//                   onChange={(e) =>
-//                     handleInputChange(emp._id, "status", e.target.value)
-//                   }
-//                 >
-//                   <option value="Present">Present</option>
-//                   <option value="Absent">Absent</option>
-//                   <option value="Leave">Leave</option>
-//                   <option value="Holiday">Holiday</option>
-//                 </select>
-//               </div>
-
-//               {/* Half Day */}
-//               <div className="flex gap-2 items-center">
-//                 <label className="block ">Half Day</label>
-//                 <input
-//                   type="checkbox"
-//                   className=""
-//                   onChange={(e) =>
-//                     handleInputChange(emp._id, "halfDay", e.target.checked)
-//                   }
-//                   disabled={attendance[emp._id]?.status === "Absent" || attendance[emp._id]?.status === "Leave" || attendance[emp._id]?.status === "Holiday"}
-//                 />
-//               </div>
-//             </div>
-
-//             {/* In Time & Out Time */}
-//             <div className="grid grid-cols-2 gap-4">
-//               <div>
-//                 <label className="block mt-2">In Time</label>
-//                 <input
-//                   type="time"
-//                   className="w-full border p-2"
-//                   disabled={attendance[emp._id]?.status === "Absent" || attendance[emp._id]?.status === "Leave" || attendance[emp._id]?.status === "Holiday"}
-//                   onChange={(e) =>
-//                     handleInputChange(emp._id, "inTime", e.target.value)
-//                   }
-//                 />
-//               </div>
-//               <div>
-//                 <label className="block mt-2">Out Time</label>
-//                 <input
-//                   type="time"
-//                   className="w-full border p-2"
-//                   disabled={attendance[emp._id]?.status === "Absent" || attendance[emp._id]?.status === "Leave" || attendance[emp._id]?.status === "Holiday"}
-//                   onChange={(e) =>
-//                     handleInputChange(emp._id, "outTime", e.target.value)
-//                   }
-//                 />
-//               </div>
-//             </div>
-
-//             {/* Auto-Calculated Working Hours */}
-//             <label className="block mt-2">Working Hours</label>
-//             <input
-//               type="text"
-//               className="w-full border p-2 bg-gray-100"
-//               value={attendance[emp._id]?.workingHours || ""}
-//               readOnly
-//             />
-
-//             {/* Remarks */}
-//             <label className="block mt-2">Remarks</label>
-//             <textarea
-//               className="w-full border p-2"
-//               rows="2"
-//               placeholder="Any remarks..."
-//               onChange={(e) =>
-//                 handleInputChange(emp._id, "remarks", e.target.value)
-//               }
-//             ></textarea>
-
-//             {/* Buttons */}
-//             <div className="mt-4">
-//               <button
-//                 className="bg-blue-500 text-white px-4 py-2 rounded"
-//                 onClick={() => submitAttendance(emp._id)}
-//               >
-//                 Save 
-//               </button>
-//               <button
-//                 className="bg-primary text-white px-4 py-2 rounded ml-2"
-//                 onClick={() => navigate(`/attandance/${emp._id}`)}
-//               >
-//                 View 
-//               </button>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AttendanceForm;
-
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -486,7 +290,7 @@ const AttendanceForm = () => {
 
   const calculateWorkingHours = (inTime, outTime) => {
     if (!inTime || !outTime) return "";
-    
+
     const [inHours, inMinutes] = inTime.split(":").map(Number);
     const [outHours, outMinutes] = outTime.split(":").map(Number);
 
@@ -557,21 +361,34 @@ const AttendanceForm = () => {
       <h2 className="text-2xl font-bold mb-4">Employee Attendance</h2>
 
       {/* Date Picker for HR */}
-      <div className="mb-4">
-        <label className="block text-lg font-semibold">Select Date</label>
-        <input
-          type="date"
-          className="border p-2 w-full md:w-64"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-        />
+      <div className="flex items-center gap-12">
+        <div className="mb-4">
+          <label className="block text-lg font-semibold">Select Date</label>
+          <input
+            type="date"
+            className="border p-2 w-full md:w-64"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-4">
+        <label className="block text-lg font-semibold">Add Total Leaves</label>
+          <input
+            type="text"
+            placeholder="Enter Number Of Leaves "
+            className="border p-2 w-full md:w-64"
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {employees.map((emp) => (
           <div key={emp._id} className="border p-4 rounded-xl shadow bg-white">
             <h3 className="text-xl font-bold">{emp.name}</h3>
-            <p>{emp.department} - {emp.position}</p>
+            <p>
+              {emp.department} - {emp.position}
+            </p>
 
             <div className="grid grid-cols-2 gap-4">
               <div>

@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 const employeeRoutes = require("./routes/employeeRoutes");
 const attandanceRoutes = require("./routes/attandanceRoutes");
 const candidateRoutes = require("./routes/candidateRoutes");
-
+const authRouter = require("./routes/authRoutes")
 
 
 dotenv.config();
@@ -27,7 +27,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 
-
+app.use("/api/auth",authRouter)
 app.use("/api/v1", employeeRoutes);
 app.use("/api/v1", attandanceRoutes);
 app.use("/api/v1", candidateRoutes);
