@@ -337,7 +337,7 @@ const AttendanceForm = () => {
       workingHours: attendance[id]?.workingHours || "",
       remarks: attendance[id]?.remarks || "",
       halfDay: attendance[id]?.halfDay || false,
-      date: selectedDate, // Use the selected date
+      date: selectedDate, 
     };
 
     try {
@@ -372,14 +372,7 @@ const AttendanceForm = () => {
           />
         </div>
 
-        <div className="mb-4">
-        <label className="block text-lg font-semibold">Add Total Leaves</label>
-          <input
-            type="text"
-            placeholder="Enter Number Of Leaves "
-            className="border p-2 w-full md:w-64"
-          />
-        </div>
+    
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -473,6 +466,8 @@ const AttendanceForm = () => {
               }
             ></textarea>
 
+            
+
             <div className="mt-4">
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded"
@@ -493,5 +488,8 @@ const AttendanceForm = () => {
     </div>
   );
 };
+
+
+
 
 export default AttendanceForm;

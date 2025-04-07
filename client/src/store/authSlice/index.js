@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import baseUrl from "../../baseUrl";
 // axios.defaults.withCredentials = true;
+
+
+// const baseURL = "http://localhost:5000/api/auth";
 
 const initialState = {
   isAuthenticated: false,
@@ -9,12 +13,14 @@ const initialState = {
 };
 
 
+
+
 export const registerUser = createAsyncThunk(
   "/auth/register",
 
   async (formData) => {
     const response = await axios.post(
-      "https://webclicksees.onrender.com/api/auth/register",
+      `${baseUrl}/register`,
       formData,
       {
         withCredentials: true,
@@ -30,7 +36,7 @@ export const loginUser = createAsyncThunk(
 
   async (formData) => {
     const response = await axios.post(
-      "https://webclicksees.onrender.com/api/auth/login",
+      `${baseUrl}/login`,
       formData,
       {
         withCredentials: true,
@@ -46,7 +52,7 @@ export const logoutUser = createAsyncThunk(
 
   async () => {
     const response = await axios.post(
-      "https://webclicksees.onrender.com/api/auth/logout",
+      `${baseUrl}/logout`,
       {},
       {
         withCredentials: true,
@@ -62,7 +68,7 @@ export const checkAuth = createAsyncThunk(
 
   async () => {
     const response = await axios.get(
-      "https://webclicksees.onrender.com/api/auth/check-auth",
+      `${baseUrl}/check-auth`,
       {
         withCredentials: true,
         headers: {

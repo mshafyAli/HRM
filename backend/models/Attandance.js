@@ -17,7 +17,7 @@ const AttandanceSchema = new mongoose.Schema(
     workingHours: { type: String, default: "-" },
     remarks: { type: String, default: "" },
     halfDay: { type: Boolean, default: false },
-    date: { type: Date, default: Date.now }, 
+    date: { type: Date, default: Date.now },
     day: {
       type: String,
       default: function () {

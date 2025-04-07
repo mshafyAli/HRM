@@ -40,6 +40,10 @@ const createAttandance = async (req, res) => {
   }
 };
 
+
+
+
+// perfect code without any errors and totalLeaves
 const markAttandance = async (req, res) => {
   try {
     const {
@@ -87,6 +91,79 @@ const markAttandance = async (req, res) => {
     res.status(500).json({ message: "Error saving attendance", error });
   }
 };
+
+// const markAttandance = async (req, res) => {
+//   try {
+//     const {
+//       employee,
+//       status,
+//       inTime,
+//       outTime,
+//       workingHours,
+//       remarks,
+//       halfDay,
+//       day,
+//       date,
+//       totalLeave, // Get totalLeave from the request body
+//     } = req.body;
+
+//     const currentYear = new Date().getFullYear();
+//     let attendance = await Attandance.findOne({ employee, date });
+
+//     // Check if total leaves have been set for the current year
+//     const totalLeaveRecord = await Attandance.findOne({ employee, year: currentYear });
+
+//     if (!totalLeaveRecord) {
+//       // If total leaves haven't been set for the year, set it
+//       if (totalLeave !== undefined) {
+//         // Save total leave only if it's being set for the first time
+//         const newAttendance = new Attandance({
+//           employee,
+//           totalLeave,
+//           year: currentYear,
+//         });
+//         await newAttendance.save();
+//       } else {
+//         // If totalLeave is not passed, it means no leave is being set for the year yet.
+//         return res.status(400).json({ message: "Total leaves need to be set for the year." });
+//       }
+//     }
+
+//     if (attendance) {
+//       // Update existing attendance record
+//       attendance.status = status;
+//       attendance.inTime = inTime;
+//       attendance.outTime = outTime;
+//       attendance.workingHours = workingHours;
+//       attendance.remarks = remarks;
+//       attendance.halfDay = halfDay;
+//       attendance.day = day;
+//       await attendance.save();
+//       return res.status(200).json(attendance);
+//     }
+
+//     // Create a new attendance record
+//     attendance = new Attandance({
+//       employee,
+//       status,
+//       inTime,
+//       outTime,
+//       workingHours,
+//       remarks,
+//       halfDay,
+//       day,
+//       date,
+//     });
+//     await attendance.save();
+//     res.status(201).json(attendance);
+//   } catch (error) {
+//     res.status(500).json({ message: "Error saving attendance", error });
+//   }
+// };
+
+
+
+
 
 const getEmployeeAttandance = async (req, res) => {
   try {
